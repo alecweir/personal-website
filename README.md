@@ -1,5 +1,4 @@
 > **Note**
->
 > This client is dependent on [another repository](https://github.com/alecweir/personal-website-backend).
 
 ## Getting Started
