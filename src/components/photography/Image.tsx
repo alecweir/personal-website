@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion, useInView } from "framer-motion"; // TODO: Add smooth parallax animations (?)
 import { IImage } from "@/types/photography";
 
-const BASE_URL = `${process.env.NEXT_PUBLIC_IMAGE_HOST}:${process.env.NEXT_PUBLIC_IMAGE_HOST_PORT}`;
+const BASE_URL = process.env.NEXT_PUBLIC_IMAGE_HOST;
 
 const Outer = styled(motion.div)`
   width: 100%;

@@ -148,8 +148,6 @@ const CollectionList = ({ photos }: Props) => {
               <motion.img
                 src={
                   process.env.NEXT_PUBLIC_IMAGE_HOST +
-                  ":" +
-                  process.env.NEXT_PUBLIC_IMAGE_HOST_PORT +
                   attributes.images.data[0].attributes.url
                 }
                 key={id}
