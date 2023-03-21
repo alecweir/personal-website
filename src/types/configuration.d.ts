@@ -1,3 +1,5 @@
+import { IImage } from "./photography";
+
 export default interface IConfiguration {
   id: number;
   attributes: {
@@ -6,6 +8,8 @@ export default interface IConfiguration {
     updatedAt: string;
     siteTitle: string;
     tags: Arrag<ITag>;
+    introduction: string;
+    bannerImage: { data: IImage };
   };
 }
 

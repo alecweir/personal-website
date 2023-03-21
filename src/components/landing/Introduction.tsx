@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link } from "../shared/Icons";
 
+interface IntroductionProps {
+  text: string;
+}
+
 export const Text = styled(motion.h1)`
   margin: 10rem 0 0 0;
   max-width: 1000px;
@@ -39,17 +43,15 @@ export const Button = styled(motion.a)`
   }
 `;
 
-const Introduction = () => {
+export default function Introduction({ text }: IntroductionProps) {
   return (
     <Container>
       <Text initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }}>
-        Adelaide based software engineer, photographer &amp; aspiring designer.
+        {text}
       </Text>
       <Button>
         Print store <Link />
       </Button>
     </Container>
   );
-};
-
-export default Introduction;
+}

@@ -8,12 +8,14 @@ import {
   getNextAndPreviousCollection,
   getPhotoCollection,
   getPhotoPaths,
+  getSiteConfiguration,
 } from "@/utils/data";
 
 import Gallery from "@/components/photography/Gallery";
 import Image from "@/components/photography/Image";
 import IPhotography from "@/types/photography";
 import { Button } from "@/components/landing/Introduction";
+import IConfiguration from "@/types/configuration";
 
 const StyledHeading = styled(motion.h1)`
   margin-top: 8rem;
@@ -44,9 +46,10 @@ interface Props {
   data: IPhotography["data"];
   previous: string;
   next: string;
+  site: IConfiguration;
 }
 
-export default function Photography({ data, previous, next }: Props) {
+export default function Photography({ data, previous, next, site }: Props) {
   const { scrollY } = useScroll();
 
   const photos = data.attributes.images.data;
@@ -58,7 +61,9 @@ export default function Photography({ data, previous, next }: Props) {
   return (
     <>
       <Head>
-        <title>{data.attributes.title} Photography &mdash; Alec Weir.</title>
+        <title>
+          {data.attributes.title} — {site.attributes.siteTitle}
+        </title>
       </Head>
       <StyledHeading style={{ opacity }}>{data.attributes.title}</StyledHeading>
       <Gallery>
@@ -104,10 +109,10 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const { slug } = context.params as IParams;
 
   const { id, ...data } = await getPhotoCollection(slug);
-
   const [previous, next] = await getNextAndPreviousCollection(id);
+  const site = await getSiteConfiguration();
 
   return {
-    props: { data, previous, next },
+    props: { data, previous, next, site },
   };
 }

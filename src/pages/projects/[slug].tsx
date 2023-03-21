@@ -10,10 +10,13 @@ import {
   getNextAndPreviousProject,
   getProjectPaths,
   getSingleProject,
+  getSiteConfiguration,
 } from "@/utils/data";
 import formatDate from "@/utils/formatDate";
 import { Components, H1 } from "@/components/projects/MDXOverrides";
 import IProject from "@/types/project";
+import Head from "next/head";
+import IConfiguration from "@/types/configuration";
 
 const ProjectMeta = styled.div`
   margin: 0 auto;
@@ -61,9 +64,10 @@ interface Props {
   project: IProject["data"];
   next: IProject["data"]["attributes"];
   previous: IProject["data"]["attributes"];
+  site: IConfiguration;
 }
 
-const ProjectPage = ({ project, next, previous }: Props) => {
+const ProjectPage = ({ project, next, previous, site }: Props) => {
   const { title, publishedAt, updatedAt, body, tag } = project.attributes;
 
   const published = formatDate(publishedAt);
@@ -72,32 +76,39 @@ const ProjectPage = ({ project, next, previous }: Props) => {
   const isEdited = published !== updated;
 
   return (
-    <Container>
-      <ProjectMeta>
-        <Tag>{tag}</Tag>
-        <ProjectTitle>{title}</ProjectTitle>
-        <p>
-          {formatDate(publishedAt)} {isEdited && `(${updated})`}
-        </p>
-      </ProjectMeta>
-      <ProjectBody>
-        <MDXRemote {...body} components={Components} />
-      </ProjectBody>
+    <>
+      <Head>
+        <title>
+          {project.attributes.title} — {site.attributes.siteTitle}
+        </title>
+      </Head>
+      <Container>
+        <ProjectMeta>
+          <Tag>{tag}</Tag>
+          <ProjectTitle>{title}</ProjectTitle>
+          <p>
+            {formatDate(publishedAt)} {isEdited && `(${updated})`}
+          </p>
+        </ProjectMeta>
+        <ProjectBody>
+          <MDXRemote {...body} components={Components} />
+        </ProjectBody>
 
-      <FooterNavigation>
-        {previous && (
-          <StyledButton href={`/projects/${previous.slug}`}>
-            &lt;- &nbsp; {previous.title}
-          </StyledButton>
-        )}
+        <FooterNavigation>
+          {previous && (
+            <StyledButton href={`/projects/${previous.slug}`}>
+              &lt;- &nbsp; {previous.title}
+            </StyledButton>
+          )}
 
-        {next && (
-          <StyledButton href={`/projects/${next.slug}`}>
-            {next.title} &nbsp; -&gt;
-          </StyledButton>
-        )}
-      </FooterNavigation>
-    </Container>
+          {next && (
+            <StyledButton href={`/projects/${next.slug}`}>
+              {next.title} &nbsp; -&gt;
+            </StyledButton>
+          )}
+        </FooterNavigation>
+      </Container>
+    </>
   );
 };
 
@@ -121,12 +132,14 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const { id, ...project } = await getSingleProject(slug);
   const [next, previous] = await getNextAndPreviousProject(id);
+  const site = await getSiteConfiguration();
 
   return {
     props: {
       project,
       next,
       previous,
+      site,
     },
   };
 };

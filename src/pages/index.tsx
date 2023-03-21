@@ -12,24 +12,31 @@ import IProject from "@/types/project";
 import IConfiguration, { ITag } from "@/types/configuration";
 import { getPhotos, getProjects, getSiteConfiguration } from "@/utils/data";
 
-export default function Home({ photos, projects, cfg }: Props) {
+export default function Home({ photos, projects, site }: Props) {
   const [activeTab, setActiveTab] = useState(TAB_TYPES["PHOTOS"]);
 
   return (
     <>
       <Head>
-        {cfg.attributes.tags.map((tag: ITag) => (
+        {site.attributes.tags.map((tag: ITag) => (
           <meta name={tag.title} content={tag.content} key={tag.id} />
         ))}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <title>Alec Weir</title>
+        <title>{site.attributes.siteTitle}</title>
       </Head>
       <main>
-        <Introduction />
+        <Introduction text={site.attributes.introduction} />
         <Container>
           <figure>
-            <img src="/DSC_3345.jpg" alt="" />
+            <pre></pre>
+            <img
+              src={
+                process.env.NEXT_PUBLIC_IMAGE_HOST +
+                site.attributes.bannerImage.data.attributes.url
+              }
+              alt=""
+            />
           </figure>
 
           <CategorySelector onChange={setActiveTab} />
@@ -50,13 +57,13 @@ interface Props {
 export async function getStaticProps() {
   const photos = await getPhotos();
   const projects = await getProjects();
-  const cfg = await getSiteConfiguration();
+  const site = await getSiteConfiguration();
 
   return {
     props: {
       photos,
       projects,
-      cfg,
+      site,
     },
   };
 }
