@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build && next export && cp -r ./admin ./out/admin",
+    "build": "next build && next export && cp -r ./src/admin ./out/admin",
     "start": "next start",
     "lint": "next lint",
     "serve": "NODE_ENV=production npx serve ./out"
