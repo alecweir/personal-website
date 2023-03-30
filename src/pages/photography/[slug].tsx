@@ -71,7 +71,11 @@ export default function Photography({ data, previous, next, site }: Props) {
           <Image
             image={image}
             key={image.id}
-            alt={image.attributes.alternativeText}
+            alt={
+              image.attributes.alternativeText
+                ? image.attributes.alternativeText!
+                : "image"
+            }
           />
         ))}
       </Gallery>
