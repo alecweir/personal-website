@@ -51,7 +51,7 @@ export default function Home({ photos, projects, site }: Props) {
 interface Props {
   photos: IPhotography["data"][];
   projects: IProject["data"][];
-  cfg: IConfiguration;
+  site: IConfiguration;
 }
 
 export async function getStaticProps() {

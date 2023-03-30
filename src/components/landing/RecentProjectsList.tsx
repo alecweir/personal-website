@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import formatDate from "@/utils/formatDate";
 import IProject from "@/types/project";
 
 const List = styled(motion.div)`
