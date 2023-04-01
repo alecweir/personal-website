@@ -29,7 +29,6 @@ export default function Home({ photos, projects, site }: Props) {
         <Introduction text={site.attributes.introduction} />
         <Container>
           <figure>
-            <pre></pre>
             <img
               src={
                 process.env.NEXT_PUBLIC_IMAGE_HOST +

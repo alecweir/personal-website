@@ -2,7 +2,7 @@ import Container from "../shared/Container";
 
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "../shared/Icons";
+// import { Link } from "../shared/Icons";
 
 interface IntroductionProps {
   text: string;
@@ -49,9 +49,9 @@ export default function Introduction({ text }: IntroductionProps) {
       <Text initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }}>
         {text}
       </Text>
-      <Button>
+      {/* <Button>
         Print store <Link />
-      </Button>
+      </Button> */}
     </Container>
   );
 }
